@@ -1,5 +1,5 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
+import { returnErrors, createMessage } from "./messages";
 
 import {
   USER_LOADED,
@@ -65,7 +65,22 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // REGISTER
-export const register = ({ username, password, email }) => (dispatch) => {
+export const register = ({
+  username,
+  password,
+  email,
+  first_name,
+  last_name,
+  age,
+  sex,
+  phone,
+  crno,
+  bedno,
+  weight,
+  is_extreme,
+  rapid_insulin,
+  long_acting,
+}) => (dispatch, getState) => {
   // Headers
   const config = {
     headers: {
@@ -74,17 +89,34 @@ export const register = ({ username, password, email }) => (dispatch) => {
   };
 
   // Request body
-  const body = JSON.stringify({ username, email, password });
+  const body = JSON.stringify({
+    username,
+    password,
+    email,
+    first_name,
+    last_name,
+    age,
+    sex,
+    phone,
+    crno,
+    bedno,
+    weight,
+    is_extreme,
+    rapid_insulin,
+    long_acting,
+  });
 
   axios
-    .post("/api/auth/register", body, config)
+    .post("/api/auth/register", body, tokenConfig(getState))
     .then((res) => {
+      dispatch(createMessage({ addLead: "Patient Added!" }));
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
     })
     .catch((err) => {
+      dispatch(createMessage({ addLead: "Patient Not Added!" }));
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: REGISTER_FAIL,

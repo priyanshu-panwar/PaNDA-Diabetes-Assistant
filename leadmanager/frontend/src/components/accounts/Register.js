@@ -11,15 +11,15 @@ export class Register extends Component {
     email: "",
     password: "",
     password2: "",
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     age: "",
     sex: "",
     phone: "",
     crno: "",
     bedno: "",
     weight: "",
-    is_extreme: "",
+    is_extreme: false,
     rapid_insulin: "",
     long_acting: "",
   };
@@ -31,7 +31,23 @@ export class Register extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { username, email, password, password2 } = this.state;
+    const {
+      username,
+      email,
+      password,
+      password2,
+      first_name,
+      last_name,
+      age,
+      sex,
+      phone,
+      crno,
+      bedno,
+      weight,
+      rapid_insulin,
+      long_acting,
+      is_extreme,
+    } = this.state;
     if (password != password2) {
       this.props.createMessage({
         passwordDoNotMatch: "Passwords do not match",
@@ -41,19 +57,49 @@ export class Register extends Component {
         username,
         password,
         email,
+        first_name,
+        last_name,
+        age,
+        sex,
+        phone,
+        crno,
+        bedno,
+        weight,
+        rapid_insulin,
+        long_acting,
+        is_extreme,
       };
       this.props.register(newUser);
     }
   };
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state.sex);
+  };
 
   render() {
     // if (this.props.isAuthenticated) {
     //   return <Redirect to="/" />;
     // }
 
-    const { username, email, password, password2 } = this.state;
+    const {
+      username,
+      email,
+      password,
+      password2,
+      first_name,
+      last_name,
+      age,
+      sex,
+      phone,
+      crno,
+      bedno,
+      weight,
+      rapid_insulin,
+      long_acting,
+      is_extreme,
+    } = this.state;
     return (
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
@@ -106,21 +152,21 @@ export class Register extends Component {
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="First name"
-                  name="firstname"
+                  name="first_name"
                   onChange={this.onChange}
-                  value={firstname}
+                  value={first_name}
                 />
               </div>
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Last name"
-                  name="lastname"
+                  name="last_name"
                   onChange={this.onChange}
-                  value={lastname}
+                  value={last_name}
                 />
               </div>
             </div>
@@ -128,7 +174,7 @@ export class Register extends Component {
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Age"
                   name="age"
                   onChange={this.onChange}
@@ -151,7 +197,7 @@ export class Register extends Component {
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Phone"
                   name="phone"
                   onChange={this.onChange}
@@ -161,7 +207,7 @@ export class Register extends Component {
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="CR No."
                   name="crno"
                   onChange={this.onChange}
@@ -173,7 +219,7 @@ export class Register extends Component {
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Weight"
                   name="weight"
                   onChange={this.onChange}
@@ -183,19 +229,25 @@ export class Register extends Component {
               <div className="col">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Bed No."
-                  name="weight"
+                  name="bedno"
                   onChange={this.onChange}
-                  value={weight}
+                  value={bedno}
                 />
               </div>
             </div>
             <div className="row form-group">
               <div className="col">
                 <label>Rapid Insulin</label>
-                <select className="form-control" id="sel1">
-                  <option>NovoRapid</option>
+                <select
+                  className="form-control"
+                  id="sel1"
+                  name="rapid_insulin"
+                  value={rapid_insulin}
+                  onChange={this.onChange}
+                >
+                  <option value="NovoRapid">NovoRapid</option>
                   <option>Apidra</option>
                   <option>HumalogLispro</option>
                   <option>Regular</option>
@@ -203,8 +255,13 @@ export class Register extends Component {
               </div>
               <div className="col">
                 <label>Long Acting Insulin</label>
-                <select className="form-control" id="sel1">
-                  <option>Lantus</option>
+                <select
+                  className="form-control"
+                  name="long_acting"
+                  value={long_acting}
+                  onChange={this.onChange}
+                >
+                  <option value="Lantus">Lantus</option>
                   <option>Basalog</option>
                   <option>Levemir</option>
                   <option>Glaritus</option>
@@ -212,6 +269,19 @@ export class Register extends Component {
                   <option>GenericGlargine</option>
                 </select>
               </div>
+            </div>
+            <div className="form-check form-group">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="flexCheckDefault"
+                name="is_extreme"
+                onChange={this.onChange}
+                value={is_extreme}
+              />
+              <label className="form-check-label" htmlFor="flexCheckDefault">
+                7 Point Patient
+              </label>
             </div>
             <div className="form-group">
               <button type="submit" className="btn btn-primary">

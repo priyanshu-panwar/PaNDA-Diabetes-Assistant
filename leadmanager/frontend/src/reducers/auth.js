@@ -32,8 +32,11 @@ export default function (state = initialState, action) {
         user: action.payload,
         isDoctor: action.payload.is_superuser,
       };
-    case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+      };
+    case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
@@ -42,10 +45,13 @@ export default function (state = initialState, action) {
         isLoading: false,
         isDoctor: action.doctor,
       };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+      };
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
-    case REGISTER_FAIL:
       localStorage.removeItem("token");
       return {
         ...state,
