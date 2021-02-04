@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addLead } from "../../actions/leads";
+import Clock from "./Clock";
 
 export class form extends Component {
   state = {
-    name: "",
-    email: "",
-    message: "",
+    sugarLevel: "",
+    dose: "",
   };
 
   static propTypes = {
@@ -18,54 +18,45 @@ export class form extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { name, email, message } = this.state;
-    const lead = { name, email, message };
+    const { sugarLevel, dose } = this.state;
+    const lead = { sugarLevel, dose };
     this.props.addLead(lead);
     this.setState({
-      name: "",
-      email: "",
-      message: "",
+      sugarLevel: "",
+      dose: "",
     });
   };
 
   render() {
-    const { name, email, message } = this.state;
+    const { sugarLevel, dose } = this.state;
     return (
-      <div className="card card-body mt-4 mb-4">
-        <h2>Add Lead Form</h2>
+      <div className="card card-body mt-4 mb-4 bg-light">
+        <h2 className="card-title">PaNDA Dose Tracker</h2>
+        <Clock />
+        <hr></hr>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label>Sugar Level</label>
             <input
               className="form-control"
-              name="name"
+              name="sugarLevel"
               type="text"
               onChange={this.onChange}
-              value={name}
+              value={sugarLevel}
             />
           </div>
           <div className="form-group">
-            <label>Email</label>
+            <label>Dose Taken</label>
             <input
               className="form-control"
-              name="email"
-              type="email"
-              onChange={this.onChange}
-              value={email}
-            />
-          </div>
-          <div className="form-group">
-            <label>Message</label>
-            <input
-              className="form-control"
-              name="message"
+              name="dose"
               type="text"
               onChange={this.onChange}
-              value={message}
+              value={dose}
             />
           </div>
           <div className="form-group">
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary">I took this Dose</button>
           </div>
         </form>
       </div>
