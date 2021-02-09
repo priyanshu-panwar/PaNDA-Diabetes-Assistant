@@ -6,9 +6,10 @@ export default class Doctor extends Component {
     return (
       <Fragment>
         <br />
-        <h2>DocDesk 1.0</h2>
+        <h2>
+          <strong>DocDesk 1.0</strong>
+        </h2>
         <hr></hr>
-        <Register />
       </Fragment>
     );
   }

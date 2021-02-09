@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken, User
+from django.contrib.auth import get_user_model
 
 from .serializers import LoginSerializer, UserSerializer, RegisterSerializer
 
@@ -58,3 +59,11 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class AllUserAPI(generics.ListAPIView):
+    permission_classes = [
+        AdminAuthenticationPermission,
+    ]
+    serializer_class = UserSerializer
+    queryset = get_user_model().objects.filter(is_superuser=False)
