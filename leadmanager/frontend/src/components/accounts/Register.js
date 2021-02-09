@@ -70,12 +70,42 @@ export class Register extends Component {
         is_extreme,
       };
       this.props.register(newUser);
+      this.setState({
+        username: "",
+        email: "",
+        password: "",
+        password2: "",
+        first_name: "",
+        last_name: "",
+        age: "",
+        sex: "",
+        phone: "",
+        crno: "",
+        bedno: "",
+        weight: "",
+        is_extreme: false,
+        rapid_insulin: "",
+        long_acting: "",
+      });
     }
   };
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state.sex);
+  };
+
+  handleDropdownChange(e) {
+    this.setState({ selectValue: e.target.value });
+  }
+
+  handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value,
+    });
   };
 
   render() {
@@ -184,12 +214,13 @@ export class Register extends Component {
               <div className="col">
                 <select
                   className="form-control"
-                  value={sex}
+                  value={this.state.selectValue}
                   onChange={this.onChange}
                   name="sex"
                 >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="---">SELECT GENDER</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
                 </select>
               </div>
             </div>
@@ -244,13 +275,14 @@ export class Register extends Component {
                   className="form-control"
                   id="sel1"
                   name="rapid_insulin"
-                  value={rapid_insulin}
+                  value={this.state.selectValue}
                   onChange={this.onChange}
                 >
-                  <option value="NovoRapid">NovoRapid</option>
-                  <option>Apidra</option>
-                  <option>HumalogLispro</option>
-                  <option>Regular</option>
+                  <option value="---">SELECT RAPID INSULIN</option>
+                  <option value="NR">NovoRapid</option>
+                  <option value="A">Apidra</option>
+                  <option value="HL">HumalogLispro</option>
+                  <option value="R">Regular</option>
                 </select>
               </div>
               <div className="col">
@@ -258,15 +290,16 @@ export class Register extends Component {
                 <select
                   className="form-control"
                   name="long_acting"
-                  value={long_acting}
+                  value={this.state.selectValue}
                   onChange={this.onChange}
                 >
-                  <option value="Lantus">Lantus</option>
-                  <option>Basalog</option>
-                  <option>Levemir</option>
-                  <option>Glaritus</option>
-                  <option>Degludee</option>
-                  <option>GenericGlargine</option>
+                  <option value="---">SELECT LONG ACTING</option>
+                  <option value="L">Lantus</option>
+                  <option value="B">Basalog</option>
+                  <option value="Le">Levemir</option>
+                  <option value="G">Glaritus</option>
+                  <option value="D">Degludee</option>
+                  <option value="GG">GenericGlargine</option>
                 </select>
               </div>
             </div>
@@ -276,8 +309,8 @@ export class Register extends Component {
                 type="checkbox"
                 id="flexCheckDefault"
                 name="is_extreme"
-                onChange={this.onChange}
-                value={is_extreme}
+                onChange={this.handleInputChange}
+                checked={this.state.is_extreme}
               />
               <label className="form-check-label" htmlFor="flexCheckDefault">
                 7 Point Patient
