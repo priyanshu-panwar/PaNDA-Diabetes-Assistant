@@ -42,10 +42,18 @@ export class Header extends Component {
             </h5>
           </Link>
         </li>
+        <li className="nav-item mr-4">
+          <Link to="/allpatients" className="nav-link">
+            <h5>
+              <strong style={{ color: "black" }}>All Patients</strong>
+            </h5>
+          </Link>
+        </li>
         <li className="nav-item mr-3">
           <button
             onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
+            className="nav-link btn  text-light"
+            style={{ backgroundColor: "#425c42" }}
           >
             Logout
           </button>
@@ -69,7 +77,10 @@ export class Header extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-light bg-light">
+      <nav
+        className="navbar navbar-expand-lg navbar-light"
+        style={{ backgroundColor: "#90a390" }}
+      >
         <div className="container">
           <div className="container-fluid">
             <button
@@ -85,6 +96,7 @@ export class Header extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
               <a className="navbar-brand" href="#">
+                <img height="64" width="64" src={"/static/frontend/logo.png"} />
                 <strong>PaNDA</strong> <small>delta 1.0</small>
               </a>
             </div>

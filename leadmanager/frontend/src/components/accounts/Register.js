@@ -133,7 +133,10 @@ export class Register extends Component {
     return (
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
-          <h2 className="text-center">Add A Patient</h2>
+          <h2 className="text-center">
+            <img height="64" width="64" src={"/static/frontend/patient.svg"} />
+            &nbsp; Add A Patient
+          </h2>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <input

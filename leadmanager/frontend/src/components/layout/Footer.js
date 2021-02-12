@@ -3,10 +3,21 @@ import React, { Component } from "react";
 export default class Footer extends Component {
   render() {
     return (
-      <div className="container">
-        <footer className="bg-light text-center text-lg-start">
-          <div className="text-center p-3">
-            © 2020 PaNDA &nbsp;&nbsp;
+      <div className="" style={{ backgroundColor: "#90a390" }}>
+        <footer
+          className="bg-light text-center text-lg-start"
+          style={{
+            backgroundColor: "#90a390",
+            width: "100%",
+            position: "absolute",
+            bottom: "0",
+          }}
+        >
+          <div
+            className="text-center p-3"
+            style={{ backgroundColor: "#90a390" }}
+          >
+            © 2021 PaNDA &nbsp;&nbsp;
             <small>This is delta version 1.0</small>
           </div>
         </footer>

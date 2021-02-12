@@ -7,6 +7,11 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  ALL_USER_FAILURE,
+  ALL_USER_SUCCESS,
+  ALL_USER_LOADING,
+  GET_PATIENT_FAILURE,
+  GET_PATIENT_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -15,10 +20,31 @@ const initialState = {
   isLoading: false,
   isDoctor: false,
   user: null,
+  users: [],
+  patient: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case ALL_USER_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ALL_USER_SUCCESS:
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case GET_PATIENT_SUCCESS:
+      return {
+        ...state,
+        patient: action.payload,
+      };
+    case GET_PATIENT_FAILURE:
+      return {
+        ...state,
+      };
     case USER_LOADING:
       return {
         ...state,
@@ -50,6 +76,7 @@ export default function (state = initialState, action) {
         ...state,
       };
     case AUTH_ERROR:
+    case ALL_USER_FAILURE:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
       localStorage.removeItem("token");

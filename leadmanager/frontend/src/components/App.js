@@ -19,7 +19,9 @@ import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
 import PrivateRoute from "./common/PrivateRoute";
-import { loadUser } from "../actions/auth";
+import { loadUser, loadAllUsers } from "../actions/auth";
+import AllUsers from "../components/leads/AllUsers";
+import Patient from "../components/leads/Patient";
 
 import { Provider } from "react-redux";
 import store from "../store";
@@ -33,6 +35,7 @@ const alertOptions = {
 class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
+    // store.dispatch(loadAllUsers());
   }
   render() {
     return (
@@ -47,6 +50,8 @@ class App extends Component {
                   <PrivateRoute exact path="/" component={LoginType} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
+                  <Route exact path="/allpatients" component={AllUsers} />
+                  <Route exact path="/patient/:pk" component={Patient} />
                 </Switch>
               </div>
               <Footer />

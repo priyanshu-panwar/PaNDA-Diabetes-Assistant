@@ -8,6 +8,7 @@ django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
 pillow = "*"
+django-filter = "*"
 
 [dev-packages]
 

@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken, User
 from django.contrib.auth import get_user_model
+import django_filters
 
 from .serializers import LoginSerializer, UserSerializer, RegisterSerializer
 
@@ -61,9 +62,32 @@ class UserAPI(generics.RetrieveAPIView):
         return self.request.user
 
 
+# get all users
 class AllUserAPI(generics.ListAPIView):
     permission_classes = [
         AdminAuthenticationPermission,
     ]
     serializer_class = UserSerializer
     queryset = get_user_model().objects.filter(is_superuser=False)
+
+# get user by id
+
+
+class UserListFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='iexact')
+
+    class Meta:
+        model = get_user_model()
+        fields = ['id']
+
+
+class UserIdAPI(generics.ListAPIView):
+    permission_classes = [
+        AdminAuthenticationPermission,
+    ]
+    serializer_class = UserSerializer
+    filter_class = UserListFilter
+
+    def get_queryset(self):
+        queryset = get_user_model().objects.filter(pk=self.kwargs['pk'])
+        return queryset

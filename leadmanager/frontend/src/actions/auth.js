@@ -10,7 +10,51 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  ALL_USER_FAILURE,
+  ALL_USER_SUCCESS,
+  ALL_USER_LOADING,
+  GET_PATIENT_FAILURE,
+  GET_PATIENT_SUCCESS,
 } from "./types";
+
+// GET SINGLE PATIENT(USER)
+export const loadPatient = (pk) => (dispatch, getState) => {
+  const url = `/api/auth/user/${pk}`;
+  axios
+    .get(url, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: GET_PATIENT_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: GET_PATIENT_FAILURE,
+      });
+    });
+};
+
+// GET ALL PATIENTS(USERS)
+export const loadAllUsers = () => (dispatch, getState) => {
+  // dispatch({ type: ALL_USER_LOADING });
+
+  axios
+    .get("/api/auth/allusers", tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: ALL_USER_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: ALL_USER_FAILURE,
+      });
+    });
+};
 
 // CHECK TOKEN AND LOAD USER
 export const loadUser = () => (dispatch, getState) => {
