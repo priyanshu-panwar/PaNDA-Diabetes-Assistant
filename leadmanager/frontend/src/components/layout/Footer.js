@@ -8,9 +8,6 @@ export default class Footer extends Component {
           className="bg-light text-center text-lg-start"
           style={{
             backgroundColor: "#90a390",
-            width: "100%",
-            position: "absolute",
-            bottom: "0",
           }}
         >
           <div
