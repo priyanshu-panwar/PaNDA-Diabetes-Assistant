@@ -7,6 +7,7 @@
  - 🔥 APP - React Native
  - 🔥 DATABASE - POSTGRESQL
  - 🔥 CLOUD - DigitalOcean/Heroku
+ - 🔥 AUTHENTICATION - Django REST KNOX AUTHENTICATION
 
 ## 💡 FEATURES
  - ✔️ There will be a web interface and Android/ios App for the whole system.
