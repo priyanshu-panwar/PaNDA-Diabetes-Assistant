@@ -4,5 +4,7 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.pythonPath": "C:\\Users\\Priya\\.virtualenvs\\PaNDA-Fqkd0Auv\\Scripts\\python.exe"
+	}
 }

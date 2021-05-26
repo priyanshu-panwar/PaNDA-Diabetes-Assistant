@@ -12,6 +12,8 @@ import {
   ALL_USER_LOADING,
   GET_PATIENT_FAILURE,
   GET_PATIENT_SUCCESS,
+  GET_PATIENT_LEADS,
+  GET_ALL_LEADS,
 } from "../actions/types";
 
 const initialState = {
@@ -22,6 +24,8 @@ const initialState = {
   user: null,
   users: [],
   patient: [],
+  patleads: [],
+  allleads: [],
 };
 
 export default function (state = initialState, action) {
@@ -35,6 +39,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         users: action.payload,
+      };
+    case GET_PATIENT_LEADS:
+      return {
+        ...state,
+        patleads: action.payload,
+      };
+    case GET_ALL_LEADS:
+      return {
+        ...state,
+        allleads: action.payload,
       };
     case GET_PATIENT_SUCCESS:
       return {

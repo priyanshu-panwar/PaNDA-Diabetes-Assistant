@@ -15,6 +15,8 @@ import {
   ALL_USER_LOADING,
   GET_PATIENT_FAILURE,
   GET_PATIENT_SUCCESS,
+  GET_PATIENT_LEADS,
+  GET_ALL_LEADS,
 } from "./types";
 
 // GET SINGLE PATIENT(USER)
@@ -34,6 +36,40 @@ export const loadPatient = (pk) => (dispatch, getState) => {
         type: GET_PATIENT_FAILURE,
       });
     });
+};
+
+// GET ALL LEADS
+export const getAllLeads = () => (dispatch, getState) => {
+  const url = `/api/leads/all`;
+  axios
+    .get(url, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: GET_ALL_LEADS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: GET_PATIENT_FAILURE,
+      });
+    });
+};
+
+// GET LEADS OF A PATIENT
+export const getPatientLeads = (id) => (dispatch, getState) => {
+  axios
+    .get(`/api/leads/${id}`, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: GET_PATIENT_LEADS,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 // GET ALL PATIENTS(USERS)
@@ -109,31 +145,8 @@ export const login = (username, password) => (dispatch) => {
 };
 
 // REGISTER
-export const register = ({
-  username,
-  password,
-  email,
-  first_name,
-  last_name,
-  age,
-  sex,
-  phone,
-  crno,
-  bedno,
-  weight,
-  is_extreme,
-  rapid_insulin,
-  long_acting,
-}) => (dispatch, getState) => {
-  // Headers
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  // Request body
-  const body = JSON.stringify({
+export const register =
+  ({
     username,
     password,
     email,
@@ -148,25 +161,50 @@ export const register = ({
     is_extreme,
     rapid_insulin,
     long_acting,
-  });
+  }) =>
+  (dispatch, getState) => {
+    // Headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  axios
-    .post("/api/auth/register", body, tokenConfig(getState))
-    .then((res) => {
-      dispatch(createMessage({ addLead: "Patient Added!" }));
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      dispatch(createMessage({ addLead: "Patient Not Added!" }));
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: REGISTER_FAIL,
-      });
+    // Request body
+    const body = JSON.stringify({
+      username,
+      password,
+      email,
+      first_name,
+      last_name,
+      age,
+      sex,
+      phone,
+      crno,
+      bedno,
+      weight,
+      is_extreme,
+      rapid_insulin,
+      long_acting,
     });
-};
+
+    axios
+      .post("/api/auth/register", body, tokenConfig(getState))
+      .then((res) => {
+        dispatch(createMessage({ addLead: "Patient Added!" }));
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        dispatch(createMessage({ addLead: "Patient Not Added!" }));
+        dispatch(returnErrors(err.response.data, err.response.status));
+        dispatch({
+          type: REGISTER_FAIL,
+        });
+      });
+  };
 
 // LOGOUT
 export const logout = () => (dispatch, getState) => {

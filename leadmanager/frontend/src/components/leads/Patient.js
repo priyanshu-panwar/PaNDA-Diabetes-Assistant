@@ -1,19 +1,23 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loadPatient } from "../../actions/auth";
+import Moment from "react-moment";
 
+import { loadPatient, getPatientLeads } from "../../actions/auth";
 import { rapid, longacting } from "./constants";
 
 export class Patient extends Component {
   static propTypes = {
     patient: PropTypes.array.isRequired,
     loadPatient: PropTypes.func.isRequired,
+    getPatientLeads: PropTypes.func.isRequired,
+    patleads: PropTypes.array.isRequired,
   };
 
   componentDidMount() {
     const pk = this.props.match.params.pk;
     this.props.loadPatient(pk);
+    this.props.getPatientLeads(pk);
   }
 
   state = {
@@ -199,6 +203,32 @@ export class Patient extends Component {
                 <h3>
                   <strong>Today's Activity</strong>
                 </h3>
+                <hr />
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Sugar Level</th>
+                      <th>Dose</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.props.patleads.map((lead) => (
+                      <tr key={lead.id}>
+                        <td>
+                          <Moment format="MMMM Do YYYY">
+                            {lead.takenAtDate}
+                          </Moment>
+                          &nbsp;
+                          {lead.takenAtTime}
+                        </td>
+                        <td>{lead.sugarLevel}</td>
+                        <td>{lead.dose}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -210,6 +240,9 @@ export class Patient extends Component {
 
 const mapStateToProps = (state) => ({
   patient: state.auth.patient,
+  patleads: state.auth.patleads,
 });
 
-export default connect(mapStateToProps, { loadPatient })(Patient);
+export default connect(mapStateToProps, { loadPatient, getPatientLeads })(
+  Patient
+);
